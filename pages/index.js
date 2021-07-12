@@ -32,6 +32,9 @@ export default function Home() {
     "omariosouto",
     "peas",
     "john-smilga",
+    "suelenmachado",
+    "williammago",
+    "OliveiraClaudio",
   ];
   return (
     <>
@@ -52,7 +55,7 @@ export default function Home() {
         >
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
-              Comunidades ({pessoasFavoritas.length})
+              Pessoas da Comunidade ({pessoasFavoritas.length})
             </h2>
             <ul>
               {pessoasFavoritas.map((pessoa) => {
