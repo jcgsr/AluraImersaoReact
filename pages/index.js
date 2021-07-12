@@ -35,6 +35,7 @@ export default function Home() {
     "suelenmachado",
     "williammago",
     "OliveiraClaudio",
+    "bot50",
   ];
   return (
     <>
