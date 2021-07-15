@@ -85,6 +85,33 @@ export default function Home() {
       .then((data) => {
         setSeguidores(data);
       });
+
+    //API GRAPHIQL
+    fetch("https://graphql.datocms.com/", {
+      method: "POST",
+      headers: {
+        Authorization: "d0883301e18c044dd1ee0181793512",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        query: `query{
+  allCommunities {
+    title
+    id
+    imageUrl
+    creatorSlug
+    url
+  }
+}
+`,
+      }),
+    })
+      .then((res) => res.json())
+      .then((resCompleta) => {
+        const comunidadesDato = resCompleta.data.allCommunities;
+        setComunidades(comunidadesDato);
+      });
   }, []);
   const pessoas = pessoasFavoritas.slice(0, 6);
   return (
@@ -106,13 +133,25 @@ export default function Home() {
                 e.preventDefault();
                 const dadosDoForm = new FormData(e.target);
                 const comunidade = {
-                  id: new Date().toISOString(),
+                  // id: new Date().toISOString(),
                   title: dadosDoForm.get("title"),
                   image: dadosDoForm.get("image"),
                   url: dadosDoForm.get("url"),
+                  creatorSlug: githubUser,
                 };
-                const comunidadesAtualizadas = [...comunidades, comunidade];
-                setComunidades(comunidadesAtualizadas);
+
+                fetch("/api/comunidades", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(comunidade),
+                }).then(async (res) => {
+                  const dados = await res.json();
+                  const comunidade = dados.registroCriado;
+                  const comunidadesAtualizadas = [...comunidades, comunidade];
+                  setComunidades(comunidadesAtualizadas);
+                });
               }}
             >
               <div>
@@ -129,6 +168,14 @@ export default function Home() {
                   name="image"
                   aria-label="URL para usar de capa"
                   placeholder="URL para usar de capa"
+                />
+              </div>{" "}
+              <div>
+                <input
+                  type="text"
+                  name="url"
+                  aria-label="url"
+                  placeholder="url"
                 />
               </div>
               <button>Criar Comunidade</button>
@@ -147,7 +194,7 @@ export default function Home() {
                 return (
                   <li key={comunidade.id}>
                     <a href={`${comunidade.url}`}>
-                      <img src={comunidade.image} />
+                      <img src={comunidade.imageUrl} />
                       <span>{comunidade.title}</span>
                     </a>
                   </li>
