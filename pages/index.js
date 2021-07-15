@@ -1,5 +1,5 @@
 // import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MainGrid from "../src/components/MainGrid";
 import Box from "../src/components/Box";
 import { ProfileRelationsBoxWrapper } from "../src/components/ProfileRelations";
@@ -36,6 +36,28 @@ const ProfileSideBar = (props) => {
   );
 };
 
+const ProfileRelationsBox = (props) => {
+  return (
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {props.title} ({props.items.length})
+      </h2>
+      <ul>
+        {/*{seguidores.map((seguidor) => {
+          return (
+            <li key={seguidor}>
+              <a href={`https://github.com/${seguidor}.png`}>
+                <img src={seguidor.image} />
+                <span>{seguidor.title}</span>
+              </a>
+            </li>
+          );
+        })}*/}
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  );
+};
+
 export default function Home() {
   const githubUser = "jcgsr";
   const [comunidades, setComunidades] = useState(data);
@@ -52,6 +74,18 @@ export default function Home() {
     "bot50",
   ];
 
+  // FETCH
+  const [seguidores, setSeguidores] = useState([]);
+  // USEEFFECT
+  useEffect(() => {
+    fetch("https://api.github.com/users/jcgsr/followers")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setSeguidores(data);
+      });
+  }, []);
   const pessoas = pessoasFavoritas.slice(0, 6);
   return (
     <>
@@ -105,6 +139,7 @@ export default function Home() {
           className="profileRelationsArea"
           style={{ gridArea: "profileRelationsArea" }}
         >
+          <ProfileRelationsBox title="Seguidores" items={seguidores} />
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">Comunidades ({comunidades.length} )</h2>
             <ul>
