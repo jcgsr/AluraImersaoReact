@@ -4,11 +4,19 @@ Projeto da Imersão da Alura utilizando React, Next, Styled-Components.
 
 ## Installation
 
+<<<<<<< HEAD
+
+=======
+
+> > > > > > > dda8d436da8edfc20e1ec9e7d1d71ebcacb17205
+
 ```node
 npx create-next-app --example with-styled-components
 # ou
 yarn create next-app --example with-styled-components
 ```
+
+<<<<<<< HEAD
 
 ## License
 
@@ -27,3 +35,5 @@ Veja o projeto [aqui](https://alurakut-jovane.netlify.app/):
 ### Mario Souto
 
 ### Paulo Silveira
+
+=======
