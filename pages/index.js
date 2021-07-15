@@ -4,7 +4,7 @@ import MainGrid from "../src/components/MainGrid";
 import Box from "../src/components/Box";
 import { ProfileRelationsBoxWrapper } from "../src/components/ProfileRelations";
 
-import data from "./assets/data";
+import data from "../src/assets/data";
 
 import {
   AlurakutMenu,
