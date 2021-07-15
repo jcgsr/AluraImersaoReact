@@ -1,4 +1,4 @@
-const data = [
+export default [
 	{
 		id: "1",
 		title: "Eu odeio acordar cedo",
@@ -38,5 +38,3 @@ const data = [
 			"https://camo.githubusercontent.com/b0972dd62bbf6ee0e28ed0ebceb48427a481568caeeb639066b23c754f0c60e5/68747470733a2f2f7777772e6761747362796a732e636f6d2f4761747362792d4d6f6e6f6772616d2e737667",
 	},
 ];
-
-export data;
