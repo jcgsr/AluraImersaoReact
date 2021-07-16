@@ -60,7 +60,7 @@ const ProfileRelationsBox = (props) => {
 
 export default function Home() {
   const githubUser = "jcgsr";
-  const [comunidades, setComunidades] = useState(data);
+  const [comunidades, setComunidades] = useState([]);
   const comunidade6 = comunidades.slice(0, 6);
   const pessoasFavoritas = [
     "juunegreiros",
@@ -135,7 +135,7 @@ export default function Home() {
                 const comunidade = {
                   // id: new Date().toISOString(),
                   title: dadosDoForm.get("title"),
-                  image: dadosDoForm.get("image"),
+                  imageUrl: dadosDoForm.get("image"),
                   url: dadosDoForm.get("url"),
                   creatorSlug: githubUser,
                 };
@@ -168,6 +168,14 @@ export default function Home() {
                   name="image"
                   aria-label="URL para usar de capa"
                   placeholder="URL para usar de capa"
+                />
+              </div>{" "}
+              <div>
+                <input
+                  type="text"
+                  name="creatorSlug"
+                  aria-label="creatorSlug"
+                  placeholder="creatorSlug"
                 />
               </div>{" "}
               <div>

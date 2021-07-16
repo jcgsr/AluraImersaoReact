@@ -1,9 +1,8 @@
 # Alurakut - Jovane
 
-Projeto da Imersão da Alura utilizando React, Next, Styled-Components.
+Projeto da Imersão da Alura utilizando React, Next, Styled-Components, DatoCMS.
 
 ## Installation
-
 
 ```node
 npx create-next-app --example with-styled-components
