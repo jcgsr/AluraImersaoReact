@@ -4,6 +4,9 @@ import MainGrid from "../src/components/MainGrid";
 import Box from "../src/components/Box";
 import { ProfileRelationsBoxWrapper } from "../src/components/ProfileRelations";
 
+import nookies from "nookies";
+import jwt from "jsonwebtoken";
+
 import data from "../src/assets/data";
 
 import {
@@ -58,8 +61,8 @@ const ProfileRelationsBox = (props) => {
   );
 };
 
-export default function Home() {
-  const githubUser = "jcgsr";
+export default function Home(props) {
+  const usuarioAleatorio = props.githubUser;
   const [comunidades, setComunidades] = useState([]);
   const comunidade6 = comunidades.slice(0, 6);
   const pessoasFavoritas = [
@@ -119,7 +122,7 @@ export default function Home() {
       <AlurakutMenu githubUser={githubUser} />
       <MainGrid>
         <div className="profileArea" style={{ gridArea: "profileArea" }}>
-          <ProfileSideBar githubUser={githubUser} />
+          <ProfileSideBar githubUser={usuarioAleatorio} />
         </div>
         <div className="welcomeArea" style={{ gridArea: "welcomeArea" }}>
           <Box>
@@ -127,7 +130,7 @@ export default function Home() {
             <OrkutNostalgicIconSet />
           </Box>
           <Box>
-            <h2 className="subTitle">O que você deseja fazer?</h2>
+            <h2 className="subTitle">Crie sua comunidade!</h2>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -137,7 +140,7 @@ export default function Home() {
                   title: dadosDoForm.get("title"),
                   imageUrl: dadosDoForm.get("image"),
                   url: dadosDoForm.get("url"),
-                  creatorSlug: githubUser,
+                  creatorSlug: usuarioAleatorio,
                 };
 
                 fetch("/api/comunidades", {
@@ -159,7 +162,7 @@ export default function Home() {
                   type="text"
                   name="title"
                   aria-label="Nome de sua comunidade"
-                  placeholder="Nome de sua comunidade"
+                  placeholder="nome"
                 />
               </div>
               <div>
@@ -167,7 +170,7 @@ export default function Home() {
                   type="text"
                   name="image"
                   aria-label="URL para usar de capa"
-                  placeholder="URL para usar de capa"
+                  placeholder="endereço da capa"
                 />
               </div>{" "}
               <div>
@@ -183,7 +186,7 @@ export default function Home() {
                   type="text"
                   name="url"
                   aria-label="url"
-                  placeholder="url"
+                  placeholder="site"
                 />
               </div>
               <button>Criar Comunidade</button>
@@ -231,4 +234,33 @@ export default function Home() {
       </MainGrid>
     </>
   );
+}
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context);
+  const token = cookies.USER_TOKEN;
+  const { isAuthenticated } = await fetch(
+    "https://alurakut.vercel.app/api/auth",
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  ).then((resposta) => resposta.json());
+  console.log(isAuthenticated);
+
+  if (!isAuthenticated) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  const { githubUser } = jwt.decode(token);
+  return {
+    props: {
+      githubUser,
+    }, // will be passed to the page component as props
+  };
 }
