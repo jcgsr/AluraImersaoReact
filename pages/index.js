@@ -175,7 +175,7 @@ export default function Home() {
                   type="text"
                   name="creatorSlug"
                   aria-label="creatorSlug"
-                  placeholder="creatorSlug"
+                  placeholder="criador"
                 />
               </div>{" "}
               <div>
