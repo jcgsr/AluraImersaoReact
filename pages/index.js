@@ -119,7 +119,7 @@ export default function Home(props) {
   const pessoas = pessoasFavoritas.slice(0, 6);
   return (
     <>
-      <AlurakutMenu githubUser={githubUser} />
+      <AlurakutMenu githubUser={usuarioAleatorio} />
       <MainGrid>
         <div className="profileArea" style={{ gridArea: "profileArea" }}>
           <ProfileSideBar githubUser={usuarioAleatorio} />
